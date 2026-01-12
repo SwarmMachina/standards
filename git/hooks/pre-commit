@@ -1,0 +1,13 @@
+#!/bin/sh
+echo "🔍 Running pre-commit checks..."
+
+npm run check
+RESULT=$?
+
+if [ $RESULT -ne 0 ]; then
+  echo "Pre-commit checks failed. Commit aborted."
+  exit 1
+fi
+
+echo "Pre-commit passed."
+exit 0

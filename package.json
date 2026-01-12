@@ -1,0 +1,57 @@
+{
+  "name": "@swarmmachina/standards",
+  "version": "1.0.0",
+  "description": "Shared code style, linting rules, git conventions and project standards for SwarmMachina projects.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "check": "prettier . --check && eslint . --ext .js,.vue",
+    "fix": "prettier . --write && eslint . --ext .js,.vue --fix",
+    "init-git-hooks": "node scripts/init-git-hooks.mjs",
+    "test": "npm run check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SwarmMachina/standards.git"
+  },
+  "author": "SwarmMachina Team",
+  "license": "Apache-2.0",
+  "keywords": [
+    "eslint",
+    "prettier",
+    "vue",
+    "jsdoc",
+    "standards",
+    "swarmmachina"
+  ],
+  "dependencies": {
+    "@eslint/js": "^9.28.0",
+    "@stylistic/eslint-plugin": "^4.4.1",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsdoc": "^51.0.1",
+    "eslint-plugin-n": "^17.20.0",
+    "eslint-plugin-prettier": "^5.4.1",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-vue": "^10.2.0",
+    "globals": "^16.2.0",
+    "prettier": "^3.5.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "exports": {
+    "./eslint.config.mjs": "./code-style/eslint.config.mjs",
+    "./setup-hooks.mjs": "./git/setup-hooks.mjs",
+    "./code-style/*.mjs": "./code-style/*.mjs",
+    "./git/*.mjs": "./git/*.mjs",
+    "./scripts/*.mjs": "./scripts/*.mjs"
+  },
+  "files": [
+    "code-style/",
+    "git/",
+    "scripts/",
+    "README.md"
+  ]
+}

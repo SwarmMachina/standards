@@ -1,0 +1,9 @@
+#!/bin/sh
+# Skip if already conventional
+first_line=$(head -n1 "$1")
+
+echo "$first_line" | grep -Eq '^(feat|fix|docs|style|refactor|perf|test|chore|build|ci)(\([\w\-]+\))?: ' && exit 0
+
+# Otherwise, default to chore
+sed -i.bak -e "1s/^/chore: /" "$1"
+rm -f "$1.bak"
