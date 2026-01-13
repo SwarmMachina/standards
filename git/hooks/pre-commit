@@ -1,5 +1,6 @@
 #!/bin/sh
-echo "🔍 Running pre-commit checks..."
+
+echo "Running pre-commit checks..."
 
 npm run check
 RESULT=$?

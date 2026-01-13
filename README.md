@@ -40,8 +40,8 @@ export default config
 Lint your code:
 
 ```bash
-npm run check   # check style
-npm run fix     # auto-fix and format
+npm run check
+npm run fix
 ```
 
 ---
