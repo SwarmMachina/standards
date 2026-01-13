@@ -10,9 +10,12 @@
     "init-git-hooks": "node scripts/init-git-hooks.mjs",
     "test": "npm run check"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SwarmMachina/standards.git"
+    "url": "git+https://github.com/SwarmMachina/standards.git"
   },
   "author": "SwarmMachina Team",
   "license": "Apache-2.0",
