@@ -1,6 +1,6 @@
 {
   "name": "@swarmmachina/standards",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shared code style, linting rules, git conventions and project standards for SwarmMachina projects.",
   "type": "module",
   "scripts": {
