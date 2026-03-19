@@ -12,6 +12,7 @@ type!: subject
 ```
 
 Where:
+
 - `type` — required commit type
 - `scope` — optional area or module name
 - `!` — optional marker for breaking changes
@@ -49,6 +50,7 @@ feat(api)!: change public auth response format
 Scope is optional, but recommended for medium and large changes.
 
 Examples of scopes:
+
 - `frontend`
 - `backend`
 - `auth`
@@ -64,12 +66,14 @@ Use lowercase names with letters, numbers, `_` or `-`.
 All commits to main branches must follow this format.
 
 Valid examples:
+
 - `feat: add user role assignment`
 - `fix(frontend): avatar reload after update`
 - `refactor(ui): simplify modal state handling`
 - `feat(api)!: remove legacy auth endpoint`
 
 Invalid examples:
+
 - `update stuff`
 - `frontend fix`
 - `chore: feat(frontend): add roles`
@@ -88,6 +92,7 @@ chore:
 ```
 
 Example:
+
 - input: `update eslint rules`
 - result: `chore: update eslint rules`
 
@@ -98,6 +103,7 @@ Example:
 ```
 
 This pattern supports:
+
 - commits with or without scope
 - optional breaking change marker `!`
 - lowercase scopes with letters, digits, `_` and `-`
