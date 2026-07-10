@@ -11,7 +11,7 @@ Shared code style, linting rules, git conventions and project standards for all 
 - Prettier formatting rules
 - Git commit message convention (Conventional Commits)
 - Git hook for auto-formatting commit messages
-- Editor & tool configs: `.editorconfig`, `.prettierignore`, `.gitignore`
+- Editor and tool configs: `.editorconfig`, `.prettierignore`, `.prettierrc`, `.gitignore`
 
 ---
 
@@ -48,9 +48,21 @@ npm run fix
 
 ### Prettier
 
-Uses built-in `.prettierrc`, `.prettierignore`, and `.editorconfig`.
+Copy the shared files into your project root:
+
+```bash
+cp node_modules/@swarmmachina/standards/code-style/.editorconfig .editorconfig
+cp node_modules/@swarmmachina/standards/code-style/.prettierrc .prettierrc
+cp node_modules/@swarmmachina/standards/code-style/.prettierignore .prettierignore
+```
 
 You can override them in your project if needed.
+
+The shared Git ignore file is available at:
+
+```bash
+node_modules/@swarmmachina/standards/git/.gitignore
+```
 
 ---
 
@@ -58,14 +70,10 @@ You can override them in your project if needed.
 
 See [`git/commit-convention.md`](./git/commit-convention.md) for the format.
 
-To enable automatic commit prefixing, link the hook:
+To install the shared hooks, run:
 
 ```bash
-chmod +x git/hooks/pre-commit
-chmod +x git/hooks/prepare-commit-msg
-
-ln -sf ../../git/hooks/pre-commit .git/hooks/pre-commit
-ln -sf ../../git/hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
+node node_modules/@swarmmachina/standards/git/setup-hooks.mjs
 ```
 
 If commit doesn't match the convention, `chore:` will be auto-prepended.
@@ -80,13 +88,14 @@ standards/
 │   ├── .editorconfig
 │   ├── .prettierrc
 │   ├── .prettierignore
-│   └── eslint.mjs
+│   └── eslint.config.mjs
 ├── git/
 │   ├── .gitignore
 │   ├── commit-convention.md
 │   └── hooks/
 │       ├── pre-commit
 │       └── prepare-commit-msg
+└── git/setup-hooks.mjs
 ```
 
 ---

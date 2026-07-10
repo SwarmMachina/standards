@@ -99,7 +99,7 @@ Example:
 ## Supported pattern
 
 ```text
-^(feat|fix|docs|style|refactor|perf|test|chore|build|ci)(\([[:alnum:]_-]+\))?!?:
+^(feat|fix|docs|style|refactor|perf|test|chore|build|ci)(\([[:alnum:]_-]+\))?!?:[ ]
 ```
 
 This pattern supports:

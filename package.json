@@ -1,12 +1,12 @@
 {
   "name": "@swarmmachina/standards",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Shared code style, linting rules, git conventions and project standards for SwarmMachina projects.",
   "type": "module",
   "scripts": {
     "check": "prettier . --check && eslint . --ext .js,.vue",
     "fix": "prettier . --write && eslint . --ext .js,.vue --fix",
-    "init-git-hooks": "node scripts/init-git-hooks.mjs",
+    "init-git-hooks": "node git/setup-hooks.mjs",
     "test": "npm run check"
   },
   "publishConfig": {
@@ -44,13 +44,12 @@
     "./eslint.config.mjs": "./code-style/eslint.config.mjs",
     "./setup-hooks.mjs": "./git/setup-hooks.mjs",
     "./code-style/*.mjs": "./code-style/*.mjs",
-    "./git/*.mjs": "./git/*.mjs",
-    "./scripts/*.mjs": "./scripts/*.mjs"
+    "./git/*.mjs": "./git/*.mjs"
   },
   "files": [
     "code-style/",
     "git/",
-    "scripts/",
+    "git/.gitignore",
     "README.md"
   ]
 }

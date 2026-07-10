@@ -1,30 +1,43 @@
-import { chmodSync, existsSync, symlinkSync } from 'fs'
-import { resolve } from 'path'
+import { existsSync, lstatSync, symlinkSync } from 'fs'
+import { dirname, relative, resolve } from 'path'
+import { fileURLToPath } from 'url'
 
 const root = process.cwd()
 const hooksDir = resolve(root, '.git/hooks')
-const standards = resolve(root, 'node_modules/@swarmmachina/standards/git/hooks')
+const standards = resolve(dirname(fileURLToPath(import.meta.url)), 'hooks')
 
 const hooks = ['pre-commit', 'prepare-commit-msg']
 
-for (const hook of hooks) {
-  console.log('Setup hook:', hook)
-  const target = resolve(hooksDir, hook)
-  const source = resolve(standards, hook)
+if (!existsSync(hooksDir)) {
+  console.error(`Git hooks directory not found: ${hooksDir}`)
+  process.exitCode = 1
+} else {
+  let failed = false
 
-  if (!existsSync(source)) {
-    console.warn(`Hook not found: ${source}`)
-    continue
-  }
+  for (const hook of hooks) {
+    console.log('Setup hook:', hook)
+    const target = resolve(hooksDir, hook)
+    const source = resolve(standards, hook)
 
-  try {
-    if (!existsSync(target)) {
-      symlinkSync(source, target)
+    if (!existsSync(source)) {
+      console.error(`Hook not found: ${source}`)
+      failed = true
+      continue
     }
 
-    chmodSync(target, 0o755)
-    console.log(`Linked ${hook} hook`)
-  } catch (err) {
-    console.error(`Failed to link ${hook}:`, err.message)
+    try {
+      if (lstatSync(target, { throwIfNoEntry: false })) {
+        console.warn(`Skipped existing hook: ${target}`)
+        continue
+      }
+
+      symlinkSync(relative(hooksDir, source), target)
+      console.log(`Linked ${hook} hook`)
+    } catch (err) {
+      failed = true
+      console.error(`Failed to link ${hook}:`, err.message)
+    }
   }
+
+  process.exitCode = failed ? 1 : 0
 }
