@@ -27,6 +27,8 @@ export default [
 
   ...vue.configs['flat/recommended'],
 
+  eslintConfigPrettier,
+
   {
     plugins: {
       jsdoc,
@@ -43,7 +45,16 @@ export default [
       'no-var': 'error',
       'prefer-const': 'warn',
       'object-shorthand': ['warn', 'properties'],
-      curly: ['error'],
+      curly: ['error', 'all'],
+      'padding-line-between-statements': [
+        'error',
+        { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
+        {
+          blankLine: 'never',
+          prev: ['const', 'let', 'var'],
+          next: ['const', 'let', 'var']
+        }
+      ],
 
       'jsdoc/require-param-description': 'off',
       'jsdoc/require-returns-description': 'off',
@@ -59,7 +70,5 @@ export default [
     rules: {
       'n/no-unpublished-import': 'off'
     }
-  },
-
-  eslintConfigPrettier
+  }
 ]

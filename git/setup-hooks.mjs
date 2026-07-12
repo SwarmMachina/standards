@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url'
 const root = process.cwd()
 const hooksDir = resolve(root, '.git/hooks')
 const standards = resolve(dirname(fileURLToPath(import.meta.url)), 'hooks')
-
 const hooks = ['pre-commit', 'prepare-commit-msg']
 
 if (!existsSync(hooksDir)) {
