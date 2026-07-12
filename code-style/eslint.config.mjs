@@ -50,7 +50,8 @@ export default [
           blankLine: 'never',
           prev: ['const', 'let', 'var'],
           next: ['const', 'let', 'var']
-        }
+        },
+        { blankLine: 'always', prev: 'if', next: 'if' }
       ],
 
       'jsdoc/require-param-description': 'off',
