@@ -2,7 +2,6 @@ import js from '@eslint/js'
 import vue from 'eslint-plugin-vue'
 import jsdoc from 'eslint-plugin-jsdoc'
 import globals from 'globals'
-import eslintPluginN from 'eslint-plugin-n'
 import eslintPluginPromise from 'eslint-plugin-promise'
 import eslintConfigPrettier from 'eslint-config-prettier'
 
@@ -32,12 +31,10 @@ export default [
   {
     plugins: {
       jsdoc,
-      n: eslintPluginN,
       promise: eslintPluginPromise
     },
     rules: {
       ...jsdoc.configs['flat/recommended'].rules,
-      ...eslintPluginN.configs.recommended.rules,
       ...eslintPluginPromise.configs.recommended.rules,
 
       'no-unused-vars': ['warn', { args: 'none', ignoreRestSiblings: true }],
@@ -59,16 +56,7 @@ export default [
       'jsdoc/require-param-description': 'off',
       'jsdoc/require-returns-description': 'off',
       'jsdoc/require-property-description': 'off',
-      'jsdoc/no-undefined-types': 'off',
-
-      'n/no-unpublished-import': 'off'
-    }
-  },
-
-  {
-    files: ['eslint.config.mjs'],
-    rules: {
-      'n/no-unpublished-import': 'off'
+      'jsdoc/no-undefined-types': 'off'
     }
   }
 ]
