@@ -51,7 +51,19 @@ export default [
           prev: ['const', 'let', 'var'],
           next: ['const', 'let', 'var']
         },
-        { blankLine: 'always', prev: 'if', next: 'if' }
+        { blankLine: 'always', prev: 'let', next: 'const' },
+        { blankLine: 'always', prev: 'const', next: 'let' },
+        { blankLine: 'always', prev: '*', next: 'return' },
+        {
+          blankLine: 'always',
+          prev: '*',
+          next: ['if', 'for', 'while']
+        },
+        {
+          blankLine: 'always',
+          prev: ['if', 'for', 'while'],
+          next: '*'
+        }
       ],
 
       'jsdoc/require-param-description': 'off',
