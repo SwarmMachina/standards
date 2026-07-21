@@ -4,6 +4,9 @@
   "description": "Shared code style, linting rules, git conventions and project standards for SwarmMachina projects.",
   "type": "module",
   "packageManager": "pnpm@11.15.1",
+  "bin": {
+    "swm-standards": "./bin/swm-standards.mjs"
+  },
   "scripts": {
     "check": "prettier . --check && eslint .",
     "fix": "eslint . --fix && prettier . --write",
@@ -71,6 +74,7 @@
     "./git/*.mjs": "./git/*.mjs"
   },
   "files": [
+    "bin/",
     "code-style/",
     "git/",
     "git/.gitignore",

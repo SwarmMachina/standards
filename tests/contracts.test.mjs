@@ -65,6 +65,7 @@ test('package contracts pin the supported runtime and honest lint peer range', (
   assert.equal(packageJson.devDependencies['@typescript/native'], 'npm:typescript@7.0.2')
   assert.equal(packageJson.devDependencies.typescript, 'npm:@typescript/typescript6@6.0.2')
   assert.equal(packageJson.dependencies['vue-eslint-parser'], '10.4.1')
+  assert.equal(packageJson.bin['swm-standards'], './bin/swm-standards.mjs')
 })
 
 test('release publishing requests an OIDC token and enables npm provenance', () => {

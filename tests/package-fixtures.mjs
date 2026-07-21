@@ -40,6 +40,7 @@ const writeFixture = (name, files, devDependencies) => {
     private: true,
     type: 'module',
     scripts: files.scripts,
+    ...(files.swmStandards ? { swmStandards: files.swmStandards } : {}),
     devDependencies
   }
 
@@ -71,6 +72,7 @@ try {
   const dryRun = JSON.parse(run(pnpmCommand, ['pack', '--dry-run', '--json'], { cwd: repository }))
   const expectedFiles = [
     'README.md',
+    'bin/swm-standards.mjs',
     'code-style/eslint-js.config.mjs',
     'code-style/eslint-typescript.config.mjs',
     'code-style/eslint-vue.config.mjs',
@@ -96,8 +98,11 @@ try {
     {
       scripts: {
         lint: 'eslint .',
-        format: 'prettier src package.json eslint.config.mjs --check'
+        format: 'prettier src package.json eslint.config.mjs --check',
+        'standards:check': 'swm-standards check src',
+        'standards:fix': 'swm-standards fix src'
       },
+      swmStandards: { preset: 'js' },
       contents: {
         'eslint.config.mjs': "import config from '@swarmmachina/standards/eslint-js'\n\nexport default config\n",
         'src/index.js': 'export const answer = 42\n'
@@ -112,6 +117,12 @@ try {
   install(javascript)
   run(pnpmCommand, ['run', 'lint'], { cwd: javascript })
   run(pnpmCommand, ['run', 'format'], { cwd: javascript })
+  run(pnpmCommand, ['run', 'standards:check'], { cwd: javascript })
+  writeFileSync(join(javascript, 'src/fix.js'), 'export const fixed={answer:42}\n')
+  assert.throws(() => run(pnpmCommand, ['run', 'standards:check'], { cwd: javascript }))
+  run(pnpmCommand, ['run', 'standards:fix'], { cwd: javascript })
+  run(pnpmCommand, ['run', 'standards:check'], { cwd: javascript })
+  assert.equal(readFileSync(join(javascript, 'src/fix.js'), 'utf8'), 'export const fixed = { answer: 42 }\n')
   assert.throws(() => run(process.execPath, ['-e', "require.resolve('typescript')"], { cwd: javascript }))
   assert.throws(() => run(process.execPath, ['-e', "require.resolve('typescript-eslint')"], { cwd: javascript }))
 
@@ -153,7 +164,8 @@ try {
   const typeScriptLint = writeFixture(
     'typescript-lint',
     {
-      scripts: { lint: 'eslint .' },
+      scripts: { lint: 'eslint .', 'standards:check': 'swm-standards check src' },
+      swmStandards: { preset: 'typescript' },
       contents: {
         'eslint.config.mjs':
           "import config from '@swarmmachina/standards/eslint-typescript'\n\nexport default config\n",
@@ -172,6 +184,7 @@ try {
   assert.match(run(pnpmCommand, ['exec', 'tsc', '--version'], { cwd: typeScriptLint }), /Version 7\.0\.2/)
   assert.match(run(pnpmCommand, ['exec', 'tsc6', '--version'], { cwd: typeScriptLint }), /Version 6\.0\./)
   runWithoutCompatibilityWarnings(pnpmCommand, ['run', 'lint'], { cwd: typeScriptLint })
+  runWithoutCompatibilityWarnings(pnpmCommand, ['run', 'standards:check'], { cwd: typeScriptLint })
   const typeScriptExports = join(typeScriptLint, 'exports.mjs')
 
   writeFileSync(
@@ -191,7 +204,8 @@ try {
   const vueJavaScript = writeFixture(
     'vue-javascript',
     {
-      scripts: { lint: 'eslint .' },
+      scripts: { lint: 'eslint .', 'standards:check': 'swm-standards check src' },
+      swmStandards: { preset: 'vue' },
       contents: {
         'eslint.config.mjs': "import config from '@swarmmachina/standards/eslint-vue'\n\nexport default config\n",
         'src/App.vue':
@@ -203,12 +217,14 @@ try {
 
   install(vueJavaScript)
   run(pnpmCommand, ['run', 'lint'], { cwd: vueJavaScript })
+  run(pnpmCommand, ['run', 'standards:check'], { cwd: vueJavaScript })
   assert.throws(() => run(process.execPath, ['-e', "require.resolve('typescript')"], { cwd: vueJavaScript }))
 
   const vueTypeScript = writeFixture(
     'vue-typescript-lint',
     {
-      scripts: { lint: 'eslint .' },
+      scripts: { lint: 'eslint .', 'standards:check': 'swm-standards check src' },
+      swmStandards: { preset: 'vue-typescript' },
       contents: {
         'eslint.config.mjs':
           "import config from '@swarmmachina/standards/eslint-vue-typescript'\n\nexport default config\n",
@@ -226,6 +242,7 @@ try {
 
   install(vueTypeScript)
   runWithoutCompatibilityWarnings(pnpmCommand, ['run', 'lint'], { cwd: vueTypeScript })
+  runWithoutCompatibilityWarnings(pnpmCommand, ['run', 'standards:check'], { cwd: vueTypeScript })
 
   const exportsFixture = join(javascript, 'exports.mjs')
 
