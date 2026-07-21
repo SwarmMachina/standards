@@ -3,6 +3,7 @@
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Node.js](https://img.shields.io/badge/node-22.13%2B%20%7C%2024.x-brightgreen)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-7.0.2-blue)](https://www.typescriptlang.org/)
+[![npm provenance](https://img.shields.io/badge/npm-provenance-2ea44f)](https://www.npmjs.com/package/%40swarmmachina%2Fstandards)
 
 Shared ESLint, Prettier, TypeScript and Git tooling for SwarmMachina packages.
 

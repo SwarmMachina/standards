@@ -70,5 +70,6 @@ test('package contracts pin the supported runtime and honest lint peer range', (
 
 test('release publishing requests an OIDC token and enables npm provenance', () => {
   assert.match(releaseWorkflow, /^\s+id-token: write$/m)
+  assert.match(releaseWorkflow, /^\s+- run: pnpm publish --access public --no-git-checks$/m)
   assert.match(releaseWorkflow, /^\s+NPM_CONFIG_PROVENANCE: true$/m)
 })
