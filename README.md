@@ -165,7 +165,7 @@ Fixtures install the tarball in clean JS, TS7, TS-lint and Vue projects on Node
 22 and 24, with automatic peer installation disabled.
 
 Publishing is CI-only. After separate approval, a `v*` tag starts the release
-workflow, repeats the gate and runs `pnpm publish` with npm provenance. Local
+workflow, repeats the pnpm gate and runs `npm publish --provenance`. Local
 publish is forbidden.
 
 ## License
