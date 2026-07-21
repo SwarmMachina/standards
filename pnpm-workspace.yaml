@@ -1,0 +1,5 @@
+autoInstallPeers: false
+minimumReleaseAgeExclude:
+  - prettier@3.9.6
+pmOnFail: error
+strictPeerDependencies: true
