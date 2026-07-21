@@ -6,8 +6,10 @@ Shared code style, linting rules, git conventions and project standards for all 
 
 - ESLint flat config with:
   - JavaScript + Vue 3 support
+  - A separate TypeScript preset based on typescript-eslint
   - JSDoc rules
   - Prettier integration
+- A strict reusable TypeScript base config
 - Prettier formatting rules
 - Git commit message convention (Conventional Commits)
 - Git hook for auto-formatting commit messages
@@ -37,12 +39,44 @@ import config from '@swarmmachina/standards/eslint.config.mjs'
 export default config
 ```
 
+For TypeScript projects, install the peer tooling and use the separate preset:
+
+```bash
+npm i -D typescript typescript-eslint
+```
+
+```js
+import config from '@swarmmachina/standards/eslint-ts'
+
+export default config
+```
+
+The JavaScript preset remains available at
+`@swarmmachina/standards/eslint.config.mjs`.
+
 Lint your code:
 
 ```bash
 npm run check
 npm run fix
 ```
+
+### TypeScript
+
+Extend the strict base config and keep project-specific paths local:
+
+```json
+{
+  "extends": "@swarmmachina/standards/tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["src"]
+}
+```
+
+The base config targets NodeNext/ES2023, emits declarations and source maps,
+and limits source code to erasable TypeScript syntax.
 
 ---
 
@@ -88,7 +122,9 @@ standards/
 │   ├── .editorconfig
 │   ├── .prettierrc
 │   ├── .prettierignore
-│   └── eslint.config.mjs
+│   ├── eslint.config.mjs
+│   ├── eslint-ts.config.mjs
+│   └── tsconfig.base.json
 ├── git/
 │   ├── .gitignore
 │   ├── commit-convention.md
