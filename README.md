@@ -128,6 +128,13 @@ Legacy 1.x paths (`./eslint.config.mjs`, `./eslint-ts`,
 `./tsconfig.base.json` and their `code-style` forms) remain available. New
 projects should use the explicit names above.
 
+## Migration from 2.x
+
+Version 3.0.0 changes the license for first-party code from Apache-2.0 to
+MPL-2.0. Runtime behavior, package exports and tooling compatibility are
+unchanged. Existing 2.x releases remain available under Apache-2.0; review the
+MPL-2.0 terms before upgrading.
+
 ## Migration from 1.2.0
 
 1. Move to Node.js 22.13+ or 24 and pnpm 11.15.1.

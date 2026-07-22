@@ -1,6 +1,6 @@
 {
   "name": "@swarmmachina/standards",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Shared code style, linting rules, git conventions and project standards for SwarmMachina projects.",
   "type": "module",
   "packageManager": "pnpm@11.15.1",
@@ -76,8 +76,10 @@
   "files": [
     "bin/",
     "code-style/",
+    "COPYRIGHT",
     "git/",
     "git/.gitignore",
+    "LICENSING.md",
     "README.md"
   ]
 }
