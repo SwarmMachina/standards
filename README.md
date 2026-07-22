@@ -1,6 +1,6 @@
 # @swarmmachina/standards
 
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://www.mozilla.org/MPL/2.0/)
 [![Node.js](https://img.shields.io/badge/node-22.13%2B%20%7C%2024.x-brightgreen)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-7.0.2-blue)](https://www.typescriptlang.org/)
 [![npm provenance](https://img.shields.io/badge/npm-provenance-2ea44f)](https://www.npmjs.com/package/%40swarmmachina%2Fstandards)
@@ -170,4 +170,9 @@ publish is forbidden.
 
 ## License
 
-Apache-2.0 © SwarmMachina
+First-party source code is licensed under the Mozilla Public License 2.0.
+See [LICENSE](LICENSE).
+
+Copyright Contributors to SwarmMachina.
+
+See [LICENSING.md](LICENSING.md) for the organization-wide repository policy.

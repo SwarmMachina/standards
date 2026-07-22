@@ -23,7 +23,7 @@
     "url": "git+https://github.com/SwarmMachina/standards.git"
   },
   "author": "SwarmMachina Team",
-  "license": "Apache-2.0",
+  "license": "MPL-2.0",
   "keywords": [
     "eslint",
     "prettier",
