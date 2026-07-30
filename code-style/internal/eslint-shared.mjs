@@ -3,6 +3,7 @@ import jsdoc from 'eslint-plugin-jsdoc'
 import globals from 'globals'
 import eslintPluginPromise from 'eslint-plugin-promise'
 import eslintConfigPrettier from 'eslint-config-prettier'
+import { swarmmachinaPlugin } from './eslint-plugin-swarmmachina.mjs'
 
 export const javascriptFoundation = [
   {
@@ -28,7 +29,8 @@ export const prettierCompatibility = eslintConfigPrettier
 export const sharedRules = {
   plugins: {
     jsdoc,
-    promise: eslintPluginPromise
+    promise: eslintPluginPromise,
+    swarmmachina: swarmmachinaPlugin
   },
   rules: {
     ...jsdoc.configs['flat/recommended'].rules,
@@ -44,7 +46,7 @@ export const sharedRules = {
       'error',
       { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
       {
-        blankLine: 'never',
+        blankLine: 'any',
         prev: ['const', 'let', 'var'],
         next: ['const', 'let', 'var']
       },
@@ -62,6 +64,7 @@ export const sharedRules = {
         next: '*'
       }
     ],
+    'swarmmachina/variable-declaration-spacing': 'error',
 
     'jsdoc/require-param-description': 'off',
     'jsdoc/require-returns-description': 'off',

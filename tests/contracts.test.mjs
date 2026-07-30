@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import { test } from 'node:test'
+import { Linter } from 'eslint'
 
 import javascriptConfig from '../code-style/eslint-js.config.mjs'
 import legacyConfig from '../code-style/eslint.config.mjs'
@@ -14,6 +15,22 @@ const packageJson = JSON.parse(await readFile(new URL('../package.json', import.
 const tsconfig = JSON.parse(await readFile(new URL('../code-style/tsconfig.base.json', import.meta.url), 'utf8'))
 const legacyPrettierConfig = JSON.parse(await readFile(new URL('../code-style/.prettierrc', import.meta.url), 'utf8'))
 const releaseWorkflow = await readFile(new URL('../.github/workflows/release.yml', import.meta.url), 'utf8')
+
+const lintSpacing = (source, config = javascriptConfig, filename = 'fixture.js') => {
+  const linter = new Linter()
+
+  return linter
+    .verify(source, config, { filename })
+    .filter(({ ruleId }) =>
+      ['padding-line-between-statements', 'swarmmachina/variable-declaration-spacing'].includes(ruleId)
+    )
+}
+
+const fixSpacing = (source) => {
+  const linter = new Linter()
+
+  return linter.verifyAndFix(source, javascriptConfig, { filename: 'fixture.js' }).output
+}
 
 test('canonical ESLint presets are flat config arrays', () => {
   for (const config of [javascriptConfig, typeScriptConfig, vueConfig, vueTypeScriptConfig]) {
@@ -35,6 +52,83 @@ test('JavaScript preset does not load TypeScript or Vue parsers', () => {
 
 test('shared Prettier export matches the legacy config', () => {
   assert.deepEqual(prettierConfig, legacyPrettierConfig)
+})
+
+test('function- and object-valued const declarations may have surrounding blank lines', () => {
+  const source = `const cleanup = () => {}
+
+const timeoutId = 1
+
+const options = {}
+
+const onExit = function () {}
+
+void cleanup
+void timeoutId
+void options
+void onExit
+`
+
+  assert.deepEqual(lintSpacing(source), [])
+})
+
+test('ordinary adjacent variable declarations still reject blank lines', () => {
+  const source = `const first = load()
+
+const second = 2
+
+void first
+void second
+`
+  const [message] = lintSpacing(source)
+
+  assert.equal(message.ruleId, 'swarmmachina/variable-declaration-spacing')
+  assert.equal(message.messageId, 'unexpectedBlankLine')
+})
+
+test('unexpected blank lines between ordinary declarations are fixable', () => {
+  const source = `const first = load()
+
+const second = 2
+
+void first
+void second
+`
+
+  assert.equal(
+    fixSpacing(source),
+    `const first = load()
+const second = 2
+
+void first
+void second
+`
+  )
+})
+
+test('TypeScript wrappers preserve block-valued const spacing', () => {
+  const source = `const options = {} satisfies Record<string, unknown>
+
+const timeoutId = 1
+
+void options
+void timeoutId
+`
+
+  assert.deepEqual(lintSpacing(source, typeScriptConfig, 'fixture.ts'), [])
+})
+
+test('const and let declarations still require a blank line between groups', () => {
+  const source = `const fixed = 1
+let mutable = 2
+
+void fixed
+mutable += 1
+`
+  const [message] = lintSpacing(source)
+
+  assert.equal(message.ruleId, 'padding-line-between-statements')
+  assert.equal(message.messageId, 'expectedBlankLine')
 })
 
 test('strict tsconfig is compatible with the TS7 compiler contract', () => {
